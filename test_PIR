@@ -1,0 +1,21 @@
+from machine import Pin
+import time
+
+# Konfiguracja pinu dla czujnika PIR
+pir_sensor = Pin(13, Pin.IN)  # Zamień 13 na numer GPIO, do którego podłączony jest czujnik OUT
+led = Pin(2, Pin.OUT)  # Wbudowana dioda LED dla sygnalizacji (opcjonalnie)
+
+print("Rozpoczęcie testu czujnika PIR. Oczekiwanie na ruch...")
+
+try:
+    while True:
+        if pir_sensor.value() == 1:  # Czujnik wykrył ruch
+            print("Ruch wykryty!")
+            led.value(1)  # Włącz diodę LED
+        else:
+            print("Brak ruchu.")
+            led.value(0)  # Wyłącz diodę LED
+        time.sleep(0.5)  # Krótkie opóźnienie dla czytelności
+except KeyboardInterrupt:
+    print("Przerwano test.")
+    led.value(0)
